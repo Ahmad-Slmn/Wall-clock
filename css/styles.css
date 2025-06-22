@@ -1,0 +1,365 @@
+:root {
+    --bg: #fff;
+    --border: #c4a764;
+    --number: #c4a764;
+    --hand: #c4a764;
+    --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--bg);
+    font-family: var(--font);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    transition: background 0.4s;
+    padding: 1rem;
+}
+
+body[class^="theme"] {
+    visibility: visible;
+}
+
+/* رسالة تنبيه المنبه */
+.alarm-banner {
+    position: fixed;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #ffcc70, #ff7e5f);
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+
+    /* ✅ التنسيق الجديد */
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* مسافة بين العناصر */
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.alarm-banner.show {
+    top: 0;
+    opacity: 1;
+}
+
+/* زر إيقاف المنبه */
+#stopAlarmBtn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.4);
+    cursor: pointer;
+    user-select: none;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+#stopAlarmBtn:hover {
+    background-color: #c0392b;
+    box-shadow: 0 6px 12px rgba(192, 57, 43, 0.6);
+}
+
+#stopAlarmBtn:active {
+    background-color: #a93226;
+    box-shadow: 0 2px 5px rgba(169, 50, 38, 0.8);
+    transform: translateY(2px);
+}
+
+/* الساعة */
+.clock {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background: var(--bg);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, 0.1),
+        0 0 0 6px var(--border),
+        0 0 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.clock::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at center, var(--border) 20%, transparent 80%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: -1;
+}
+
+/* أرقام الساعة */
+.number {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--number);
+    transform: translate(-50%, -50%);
+}
+
+/* عقارب الساعة */
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    background: var(--hand);
+    border-radius: 6px;
+}
+
+.hour {
+    width: 4px;
+    height: 70px;
+    z-index: 3;
+}
+
+.minute {
+    width: 3px;
+    height: 100px;
+    z-index: 2;
+}
+
+.second {
+    width: 2px;
+    height: 120px;
+    z-index: 1;
+}
+
+/* النقطة الوسطى */
+.dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--hand);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+/* التاريخ والتوقيت الرقمي */
+.date-container,
+.digital-clock {
+    text-align: center;
+    color: var(--number);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.digital-clock {
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* أزرار التحكم */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.controls button,
+.controls input[type="time"],
+.controls select {
+    padding: 0.4rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    background-color: var(--border);
+    color: #fff;
+    cursor: pointer;
+    min-width: 130px;
+}
+
+.controls input[type="time"] {
+    background: #fff;
+    color: #000;
+    border: 1px solid #aaa;
+    min-width: unset;
+}
+
+.controls label {
+    color: var(--number);
+    user-select: none;
+    cursor: pointer;
+    margin-right: 0.4rem;
+}
+
+.controls input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+/* أزرار اختيار الأنماط */
+.themes {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.theme-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+}
+
+.theme-btn.active-theme {
+    outline: 3px solid #ffd700;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px #ffd700;
+    z-index: 10;
+}
+
+/* ألوان الأنماط */
+.gold {
+    background: #c4a764;
+}
+
+.dark {
+    background: #222;
+}
+
+.classic {
+    background: #faf3e0;
+}
+
+.steel {
+    background: #708090;
+}
+
+.royal {
+    background: #2c3e50;
+}
+
+/* تعريف المتغيرات حسب النمط */
+.theme-gold {
+    --bg: #fff;
+    --border: #c4a764;
+    --number: #c4a764;
+    --hand: #c4a764;
+}
+
+.theme-dark {
+    --bg: #121212;
+    --border: #b97e56;
+    --number: #d7a977;
+    --hand: #e6b98c;
+}
+
+.theme-classic {
+    --bg: #fefcf6;
+    --border: #a67c52;
+    --number: #5e4734;
+    --hand: #a67c52;
+}
+
+.theme-steel {
+    --bg: #e6e8ea;
+    --border: #708090;
+    --number: #4a5a6a;
+    --hand: #2f4f4f;
+}
+
+.theme-royal {
+    --bg: #1c2b3a;
+    --border: #d4af37;
+    --number: #f0e68c;
+    --hand: #ffd700;
+}
+
+/* نافذة تأكيد الحذف */
+.confirm-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.confirm-modal.show {
+    display: flex;
+}
+
+.confirm-modal-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 30px;
+    max-width: 320px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-modal-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.confirm-btn {
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.yes-btn {
+    background-color: #c0392b;
+}
+
+.yes-btn:hover {
+    background-color: #e74c3c;
+}
+
+.no-btn {
+    background-color: #7f8c8d;
+}
+
+.no-btn:hover {
+    background-color: #95a5a6;
+}

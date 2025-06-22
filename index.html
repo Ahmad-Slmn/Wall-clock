@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ساعة حائط أنالوج مع ميزات إضافية</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="theme-gold">
+
+    <!-- رسالة تنبيه المنبه -->
+    <div id="alarmBanner" class="alarm-banner" aria-live="polite" role="alert" hidden>🔔 حان وقت المنبه!</div>
+
+    <!-- الساعة التناظرية -->
+    <div class="clock" id="clock" role="application" aria-label="ساعة حائط تناظرية">
+        <div class="hand hour" id="hour" aria-hidden="true"></div>
+        <div class="hand minute" id="minute" aria-hidden="true"></div>
+        <div class="hand second" id="second" aria-hidden="true"></div>
+        <div class="dot"></div>
+
+        <!-- أرقام الساعة -->
+        <div class="number" style="top: 20px; left: 150px;">12</div>
+        <div class="number" style="top: 45px; left: 235px;">1</div>
+        <div class="number" style="top: 100px; left: 275px;">2</div>
+        <div class="number" style="top: 165px; left: 285px;">3</div>
+        <div class="number" style="top: 230px; left: 260px;">4</div>
+        <div class="number" style="top: 270px; left: 200px;">5</div>
+        <div class="number" style="top: 285px; left: 150px;">6</div>
+        <div class="number" style="top: 270px; left: 90px;">7</div>
+        <div class="number" style="top: 230px; left: 40px;">8</div>
+        <div class="number" style="top: 165px; left: 20px;">9</div>
+        <div class="number" style="top: 100px; left: 25px;">10</div>
+        <div class="number" style="top: 45px; left: 60px;">11</div>
+    </div>
+
+    <!-- التاريخ والتوقيت الرقمي -->
+    <div class="date-container" id="dateContainer" aria-live="polite"></div>
+    <div class="digital-clock" id="digitalClock" aria-live="polite" aria-atomic="true">00:00:00</div>
+
+    <!-- عداد الوقت المتبقي للمنبه -->
+    <div id="alarmCountdown" style="font-size: 1rem; margin-bottom: 0.6rem; color: darkred;" aria-live="polite"></div>
+
+    <!-- أزرار التحكم في المنبه والساعة -->
+    <div class="controls" role="region" aria-label="عناصر تحكم المنبه والساعة">
+        <input type="time" id="alarmTime" aria-label="وقت المنبه" />
+        <select id="alarmTone" aria-label="اختيار نغمة المنبه" title="اختر نغمة المنبه">
+            <option value="soft-bell">جرس ناعم (افتراضي)</option>
+            <option value="Quiet Mechanical Chime">رنين ميكانيكي هادئ</option>
+            <option value="digital">رقمي</option>
+            <option value="medium-bell">جرس متوسط</option>
+            <option value="dinner-bell">جرس عشاء</option>
+        </select>
+        <label for="repeatAlarm"><input type="checkbox" id="repeatAlarm" /> تكرار يومي</label>
+        <button id="setAlarmBtn" aria-label="تعيين المنبه">تعيين المنبه 🔔</button>
+        <button id="clearAlarmBtn" aria-label="حذف المنبه الحالي" title="حذف المنبه الحالي">🗑️ حذف المنبه</button>
+        <button id="toggleBtn" aria-pressed="true" aria-label="إيقاف وتشغيل الساعة">إيقاف الساعة</button>
+    </div>
+
+    <!-- أزرار اختيار الأنماط -->
+    <div class="themes" role="region" aria-label="اختيار أنماط الساعة">
+        <button class="theme-btn gold" onclick="setTheme('gold')" title="ذهبي" aria-label="نمط ذهبي"></button>
+        <button class="theme-btn dark" onclick="setTheme('dark')" title="داكن" aria-label="نمط داكن"></button>
+        <button class="theme-btn classic" onclick="setTheme('classic')" title="كلاسيكي" aria-label="نمط كلاسيكي"></button>
+        <button class="theme-btn steel" onclick="setTheme('steel')" title="رمادي معدني" aria-label="نمط رمادي معدني"></button>
+        <button class="theme-btn royal" onclick="setTheme('royal')" title="أزرق ملكي" aria-label="نمط أزرق ملكي"></button>
+    </div>
+
+    <!-- نافذة تأكيد حذف المنبه -->
+    <div id="confirmDeleteModal" class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmDeleteText" hidden>
+        <div class="confirm-modal-content">
+            <p id="confirmDeleteText" class="confirm-modal-text">هل أنت متأكد من حذف المنبه؟</p>
+            <button id="confirmDeleteYes" class="confirm-btn yes-btn" aria-label="نعم حذف المنبه">نعم</button>
+            <button id="confirmDeleteNo" class="confirm-btn no-btn" aria-label="لا إلغاء الحذف">لا</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

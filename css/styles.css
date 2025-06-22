@@ -67,7 +67,7 @@ body[class^="theme"] {
     transform: translateX(-50%);
     background: linear-gradient(to right, #ffcc70, #ff7e5f);
     color: #222;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     padding: 1rem 2rem;
     border-radius: 0 0 12px 12px;
@@ -78,9 +78,14 @@ body[class^="theme"] {
 
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: nowrap;
     white-space: nowrap;
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    justify-content: center;
 }
 
 .alarm-banner.show {
@@ -248,6 +253,25 @@ body[class^="theme"] {
     margin-bottom: 1rem;
     align-items: center;
 }
+
+.alarm-countdown {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+}
+
+.alarm-countdown.soon {
+    color: #e74c3c;
+}
+
+.alarm-countdown.medium {
+    color: #f39c12;
+}
+
+.alarm-countdown.later {
+    color: #2ecc71;
+}
+
 
 .controls button,
 .controls input[type="time"],
@@ -485,6 +509,14 @@ body[class^="theme"] {
         gap: 0.5rem;
         align-items: stretch;
         width: 100%
+    }
+
+    .alarm-banner {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+        flex-wrap: wrap;
+        white-space: normal;
+        max-width: 95vw;
     }
 
     .controls button,

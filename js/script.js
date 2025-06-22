@@ -240,17 +240,26 @@ if (soundEnabled && userInteracted) {
         stopBtn.onmouseenter = () => stopBtn.style.backgroundColor = '#e74c3c';
         stopBtn.onmouseleave = () => stopBtn.style.backgroundColor = '#c0392b';
 
-        stopBtn.onclick = () => {
-            clearAlarm();
-            banner.classList.remove('show');
-            banner.hidden = true;
-            if (currentAlarmSound) {
-                currentAlarmSound.pause();
-                currentAlarmSound.currentTime = 0;
-                currentAlarmSound = null;
-            }
-            localStorage.removeItem('persistentAlarmMessage');
-        };
+      stopBtn.onclick = () => {
+    // إيقاف الصوت فقط
+    if (currentAlarmSound) {
+        currentAlarmSound.pause();
+        currentAlarmSound.currentTime = 0;
+        currentAlarmSound = null;
+    }
+
+    // إخفاء البانر
+    banner.classList.remove('show');
+    banner.hidden = true;
+
+    // مسح رسالة المنبه من التخزين المؤقت (وليس الإعدادات)
+    localStorage.removeItem('persistentAlarmMessage');
+    localStorage.removeItem('persistentAlarmShowStopBtn');
+
+    // عرض رسالة تفيد أن المنبه تم إيقافه (لكن الإعدادات باقية)
+    showAlarmBanner('✅ تم إيقاف المنبه.');
+};
+
         banner.appendChild(stopBtn);
     }
 
@@ -388,17 +397,35 @@ function clearAlarm() {
 
 function updateAlarmCountdown() {
     if (!alarmTime) return;
+
     const now = new Date();
     const [alarmH, alarmM] = alarmTime.split(':').map(Number);
     const alarmDate = new Date(now);
     alarmDate.setHours(alarmH, alarmM, 0, 0);
     if (alarmDate <= now) alarmDate.setDate(alarmDate.getDate() + 1);
+
     const diff = alarmDate - now;
-    const hrs = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
-    const mins = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+    const minsLeft = Math.floor(diff / (1000 * 60));
+    const hrs = String(Math.floor(minsLeft / 60)).padStart(2, '0');
+    const mins = String(minsLeft % 60).padStart(2, '0');
     const secs = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-    document.getElementById('alarmCountdown').textContent = `الوقت المتبقي للمنبه: ${hrs}:${mins}:${secs}`;
+
+    const countdownEl = document.getElementById('alarmCountdown');
+    countdownEl.textContent = `الوقت المتبقي للمنبه: ${hrs}:${mins}:${secs}`;
+
+    // إزالة جميع الكلاسات أولاً
+    countdownEl.classList.remove('soon', 'medium', 'later');
+
+    // تحديد اللون حسب الوقت المتبقي
+    if (minsLeft < 5) {
+        countdownEl.classList.add('soon');    // أقل من 5 دقائق: أحمر
+    } else if (minsLeft < 10) {
+        countdownEl.classList.add('medium');  // أقل من 10 دقائق: برتقالي
+    } else {
+        countdownEl.classList.add('later');   // أكثر من 10 دقائق: أخضر
+    }
 }
+
 
 function startAlarmCountdown() {
     clearInterval(countdownInterval);

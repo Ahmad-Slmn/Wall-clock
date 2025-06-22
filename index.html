@@ -41,8 +41,7 @@
     <div class="digital-clock" id="digitalClock" aria-live="polite" aria-atomic="true">00:00:00</div>
 
     <!-- عداد الوقت المتبقي للمنبه -->
-    <div id="alarmCountdown" style="font-size: 1rem; margin-bottom: 0.6rem; color: darkred;" aria-live="polite"></div>
-
+    <div id="alarmCountdown" class="alarm-countdown" aria-live="polite"></div>
     <!-- أزرار التحكم في المنبه والساعة -->
     <div class="controls" role="region" aria-label="عناصر تحكم المنبه والساعة">
         <input type="time" id="alarmTime" aria-label="وقت المنبه" />
@@ -54,7 +53,7 @@
             <option value="dinner-bell">جرس عشاء</option>
         </select>
         <label for="repeatAlarm"><input type="checkbox" id="repeatAlarm" /> تكرار يومي</label>
-        <button id="setAlarmBtn" aria-label="تعيين المنبه">تعيين المنبه 🔔</button>
+        <button id="setAlarmBtn" aria-label="تعيين المنبه">🔔 تعيين المنبه</button>
         <button id="clearAlarmBtn" aria-label="حذف المنبه الحالي" title="حذف المنبه الحالي">🗑️ حذف المنبه</button>
         <button id="toggleBtn" aria-pressed="true" aria-label="إيقاف وتشغيل الساعة">إيقاف الساعة</button>
     </div>

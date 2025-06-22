@@ -39,7 +39,10 @@ const allEvents = [
 
 // تفعيل الصوت عند أول تفاعل بأي من هذه الأحداث
 allEvents.forEach(eventType => {
-    window.addEventListener(eventType, enableSound, { once: true, capture: true });
+    window.addEventListener(eventType, enableSound, {
+        once: true,
+        capture: true
+    });
 });
 
 
@@ -59,11 +62,11 @@ const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربع�
 // ✅ تم حذف tickAudio نهائيًا
 
 const alarmSounds = {
-  "soft-bell":     "sounds/1.mp3",
-  "Quiet Mechanical Chime": "sounds/2.mp3",
-  "digital":       "sounds/3.mp3",
-  "medium-bell":   "sounds/4.mp3",
-  "dinner-bell":   "sounds/5.mp3"
+    "soft-bell": "sounds/1.mp3",
+    "Quiet Mechanical Chime": "sounds/2.mp3",
+    "digital": "sounds/3.mp3",
+    "medium-bell": "sounds/4.mp3",
+    "dinner-bell": "sounds/5.mp3"
 };
 
 
@@ -189,11 +192,11 @@ function setTheme(theme) {
 function showAlarmBanner(message, showStopBtn = false, persist = false) {
 
     const banner = document.getElementById('alarmBanner');
-        // تشغيل صوت عند ظهور الرسالة
-if (soundEnabled && userInteracted) {
-    const bannerSound = new Audio('sounds/notify.mp3');
-    bannerSound.play().catch(err => console.warn('فشل تشغيل صوت الرسالة:', err));
-}
+    // تشغيل صوت عند ظهور الرسالة
+    if (soundEnabled && userInteracted) {
+        const bannerSound = new Audio('sounds/notify.mp3');
+        bannerSound.play().catch(err => console.warn('فشل تشغيل صوت الرسالة:', err));
+    }
     banner.hidden = false;
     banner.innerHTML = '';
 
@@ -240,25 +243,25 @@ if (soundEnabled && userInteracted) {
         stopBtn.onmouseenter = () => stopBtn.style.backgroundColor = '#e74c3c';
         stopBtn.onmouseleave = () => stopBtn.style.backgroundColor = '#c0392b';
 
-      stopBtn.onclick = () => {
-    // إيقاف الصوت فقط
-    if (currentAlarmSound) {
-        currentAlarmSound.pause();
-        currentAlarmSound.currentTime = 0;
-        currentAlarmSound = null;
-    }
+        stopBtn.onclick = () => {
+            // إيقاف الصوت فقط
+            if (currentAlarmSound) {
+                currentAlarmSound.pause();
+                currentAlarmSound.currentTime = 0;
+                currentAlarmSound = null;
+            }
 
-    // إخفاء البانر
-    banner.classList.remove('show');
-    banner.hidden = true;
+            // إخفاء البانر
+            banner.classList.remove('show');
+            banner.hidden = true;
 
-    // مسح رسالة المنبه من التخزين المؤقت (وليس الإعدادات)
-    localStorage.removeItem('persistentAlarmMessage');
-    localStorage.removeItem('persistentAlarmShowStopBtn');
+            // مسح رسالة المنبه من التخزين المؤقت (وليس الإعدادات)
+            localStorage.removeItem('persistentAlarmMessage');
+            localStorage.removeItem('persistentAlarmShowStopBtn');
 
-    // عرض رسالة تفيد أن المنبه تم إيقافه (لكن الإعدادات باقية)
-    showAlarmBanner('✅ تم إيقاف المنبه.');
-};
+            // عرض رسالة تفيد أن المنبه تم إيقافه (لكن الإعدادات باقية)
+            showAlarmBanner('✅ تم إيقاف المنبه.');
+        };
 
         banner.appendChild(stopBtn);
     }
@@ -418,11 +421,11 @@ function updateAlarmCountdown() {
 
     // تحديد اللون حسب الوقت المتبقي
     if (minsLeft < 5) {
-        countdownEl.classList.add('soon');    // أقل من 5 دقائق: أحمر
+        countdownEl.classList.add('soon'); // أقل من 5 دقائق: أحمر
     } else if (minsLeft < 10) {
-        countdownEl.classList.add('medium');  // أقل من 10 دقائق: برتقالي
+        countdownEl.classList.add('medium'); // أقل من 10 دقائق: برتقالي
     } else {
-        countdownEl.classList.add('later');   // أكثر من 10 دقائق: أخضر
+        countdownEl.classList.add('later'); // أكثر من 10 دقائق: أخضر
     }
 }
 
@@ -488,25 +491,50 @@ function playAlarmSound() {
 // إدارة نافذة تأكيد حذف المنبه (تظهر فقط عند الضغط على زر الحذف)
 // ===============================
 function showConfirmDeleteModal() {
-    confirmDeleteModal.style.display = 'flex'; 
+    const modal = document.querySelector('.confirm-modal');
+    const noBtn = document.getElementById('confirmDeleteNo');
+
+    modal.classList.add('showing');
+
+    // السماح للـ transition بالعمل بعد عرض العنصر
+    requestAnimationFrame(() => {
+        modal.classList.add('active');
+
+        // ✅ التركيز على زر "لا"
+        if (noBtn) {
+            noBtn.focus();
+            noBtn.classList.add('pulsing');
+
+            // إزالة المؤثر بعد فترة قصيرة
+            setTimeout(() => noBtn.classList.remove('pulsing'), 2500);
+        }
+    });
 }
 
+
 function hideConfirmDeleteModal() {
-    confirmDeleteModal.style.display = 'none';
+    const modal = document.querySelector('.confirm-modal');
+    modal.classList.remove('active');
+
+    // بعد انتهاء الانيميشن، نخفي العنصر فعليًا
+    modal.addEventListener('transitionend', function handler() {
+        modal.classList.remove('showing');
+        modal.removeEventListener('transitionend', handler);
+    });
 }
 
 // زر حذف المنبه: إظهار نافذة التأكيد فقط
 btnClearAlarm?.addEventListener('click', (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // ✅ تحقق إن كان لا يوجد منبه مفعّل
-  if (!alarmTime && !localStorage.getItem('alarmTime')) {
-    showAlarmBanner('⚠️ لا يوجد منبه لحذفه.');
-    return;
-  }
+    // ✅ تحقق إن كان لا يوجد منبه مفعّل
+    if (!alarmTime && !localStorage.getItem('alarmTime')) {
+        showAlarmBanner('⚠️ لا يوجد منبه لحذفه.');
+        return;
+    }
 
-  // ✅ إذا وُجد منبه، أظهر نافذة التأكيد
-  showConfirmDeleteModal();
+    // ✅ إذا وُجد منبه، أظهر نافذة التأكيد
+    showConfirmDeleteModal();
 });
 
 
@@ -585,17 +613,17 @@ window.addEventListener('DOMContentLoaded', () => {
     setAlarmBtn?.addEventListener('click', setAlarm);
 
     // زر الحذف مرتبط بإظهار نافذة التأكيد فقط (ليس الحذف مباشرة)
-  btnClearAlarm?.addEventListener('click', (e) => {
-  e.preventDefault();
+    btnClearAlarm?.addEventListener('click', (e) => {
+        e.preventDefault();
 
-  // ✅ تحقق إن كان لا يوجد منبه مفعّل
-  if (!alarmTime && !localStorage.getItem('alarmTime')) {
-    showAlarmBanner('⚠️ لا يوجد منبه لحذفه.');
-    return;
-  }
+        // ✅ تحقق إن كان لا يوجد منبه مفعّل
+        if (!alarmTime && !localStorage.getItem('alarmTime')) {
+            showAlarmBanner('⚠️ لا يوجد منبه لحذفه.');
+            return;
+        }
 
-  // ✅ إذا وُجد منبه، أظهر نافذة التأكيد
-  showConfirmDeleteModal();
-});
+        // ✅ إذا وُجد منبه، أظهر نافذة التأكيد
+        showConfirmDeleteModal();
+    });
 
 });

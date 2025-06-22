@@ -1,18 +1,47 @@
 // ===============================
 // كسر حظر تشغيل الصوت عند أول نقرة
 // ===============================
+
 let userInteracted = false;
-window.addEventListener('click', () => {
+let pendingAlarmRetry = false;
+
+function enableSound() {
     if (!userInteracted) {
         userInteracted = true;
+
         const silentSound = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=');
-        silentSound.play().catch(err => {
-            console.warn('فشل تشغيل الصوت الصامت:', err);
+        silentSound.play().catch(err => console.warn('فشل تشغيل الصوت الصامت:', err));
+        soundEnabled = true;
+
+        if (pendingAlarmRetry) {
+            playAlarmSound();
+            pendingAlarmRetry = false;
+        }
+
+        // إزالة المستمعين بعد التفعيل
+        allEvents.forEach(eventType => {
+            window.removeEventListener(eventType, enableSound, true);
         });
     }
-}, {
-    once: true
+}
+
+// أنواع التفاعل الحساسة
+const allEvents = [
+    'click',
+    'touchstart',
+    'keydown',
+    'mousemove',
+    'mousedown',
+    'wheel',
+    'scroll',
+    'pointerdown'
+];
+
+// تفعيل الصوت عند أول تفاعل بأي من هذه الأحداث
+allEvents.forEach(eventType => {
+    window.addEventListener(eventType, enableSound, { once: true, capture: true });
 });
+
 
 // ===============================
 // المتغيرات العامة
@@ -27,14 +56,14 @@ let repeatAlarm = false;
 
 const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-const tickAudio = new Audio('https://actions.google.com/sounds/v1/clock/ticking_clock.ogg');
+// ✅ تم حذف tickAudio نهائيًا
 
 const alarmSounds = {
-  "soft-bell":     "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg",
-  "Quiet Mechanical Chime":          "https://actions.google.com/sounds/v1/alarms/mechanical_clock_ring.ogg",
-  "digital":       "https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg",
-  "medium-bell":   "https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg",
-  "dinner-bell":   "https://actions.google.com/sounds/v1/alarms/dinner_bell_triangle.ogg"
+  "soft-bell":     "sounds/1.mp3",
+  "Quiet Mechanical Chime": "sounds/2.mp3",
+  "digital":       "sounds/3.mp3",
+  "medium-bell":   "sounds/4.mp3",
+  "dinner-bell":   "sounds/5.mp3"
 };
 
 
@@ -83,13 +112,9 @@ function rotateHandsSmooth() {
     updateDigitalClock(now);
     checkAlarm(now);
 
-    if (soundEnabled && now.getMilliseconds() < 50) {
-        tickAudio.currentTime = 0;
-        tickAudio.play().catch(() => {});
-    }
-
     animationId = requestAnimationFrame(rotateHandsSmooth);
 }
+
 
 function updateDigitalClock(time) {
     const h = String(time.getHours()).padStart(2, '0');
@@ -162,7 +187,13 @@ function setTheme(theme) {
 // عرض رسالة المنبه مع زر الإيقاف (إذا مطلوب)
 // ===============================
 function showAlarmBanner(message, showStopBtn = false, persist = false) {
+
     const banner = document.getElementById('alarmBanner');
+        // تشغيل صوت عند ظهور الرسالة
+if (soundEnabled && userInteracted) {
+    const bannerSound = new Audio('sounds/notify.mp3');
+    bannerSound.play().catch(err => console.warn('فشل تشغيل صوت الرسالة:', err));
+}
     banner.hidden = false;
     banner.innerHTML = '';
 
@@ -414,7 +445,8 @@ let currentAlarmSound = null;
 
 function playAlarmSound() {
     if (!userInteracted) {
-        console.warn('لا يمكن تشغيل الصوت قبل تفاعل المستخدم');
+        console.warn('🔇 لم يتم التفاعل بعد، سيتم تشغيل الصوت بعد أول تفاعل');
+        pendingAlarmRetry = true;
         return;
     }
 
@@ -423,6 +455,7 @@ function playAlarmSound() {
     currentAlarmSound = new Audio(soundUrl);
     currentAlarmSound.play().catch(err => console.error('خطأ في تشغيل الصوت:', err));
 }
+
 
 // ===============================
 // إدارة نافذة تأكيد حذف المنبه (تظهر فقط عند الضغط على زر الحذف)

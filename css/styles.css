@@ -6,6 +6,42 @@
     --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* أنماط الألوان حسب النمط */
+.theme-gold {
+    --bg: #fff;
+    --border: #c4a764;
+    --number: #c4a764;
+    --hand: #c4a764;
+}
+
+.theme-dark {
+    --bg: #121212;
+    --border: #b97e56;
+    --number: #d7a977;
+    --hand: #e6b98c;
+}
+
+.theme-classic {
+    --bg: #fefcf6;
+    --border: #a67c52;
+    --number: #5e4734;
+    --hand: #a67c52;
+}
+
+.theme-steel {
+    --bg: #e6e8ea;
+    --border: #708090;
+    --number: #4a5a6a;
+    --hand: #2f4f4f;
+}
+
+.theme-royal {
+    --bg: #1c2b3a;
+    --border: #d4af37;
+    --number: #f0e68c;
+    --hand: #ffd700;
+}
+
 body {
     margin: 0;
     height: 100vh;
@@ -24,7 +60,6 @@ body[class^="theme"] {
     visibility: visible;
 }
 
-/* رسالة تنبيه المنبه */
 .alarm-banner {
     position: fixed;
     top: -60px;
@@ -41,10 +76,9 @@ body[class^="theme"] {
     opacity: 0;
     transition: all 0.6s ease-in-out;
 
-    /* ✅ التنسيق الجديد */
     display: flex;
     align-items: center;
-    gap: 1.5rem; /* مسافة بين العناصر */
+    gap: 1.5rem;
     flex-wrap: nowrap;
     white-space: nowrap;
 }
@@ -54,34 +88,6 @@ body[class^="theme"] {
     opacity: 1;
 }
 
-/* زر إيقاف المنبه */
-#stopAlarmBtn {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.4);
-    cursor: pointer;
-    user-select: none;
-    margin-top: 10px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-}
-
-#stopAlarmBtn:hover {
-    background-color: #c0392b;
-    box-shadow: 0 6px 12px rgba(192, 57, 43, 0.6);
-}
-
-#stopAlarmBtn:active {
-    background-color: #a93226;
-    box-shadow: 0 2px 5px rgba(169, 50, 38, 0.8);
-    transform: translateY(2px);
-}
-
-/* الساعة */
 .clock {
     position: relative;
     width: 300px;
@@ -112,7 +118,6 @@ body[class^="theme"] {
     z-index: -1;
 }
 
-/* أرقام الساعة */
 .number {
     position: absolute;
     font-size: 1.5rem;
@@ -121,7 +126,67 @@ body[class^="theme"] {
     transform: translate(-50%, -50%);
 }
 
-/* عقارب الساعة */
+/* مواقع الأرقام تتناسب مع حجم الساعة */
+.number12 {
+    top: 6.7%;
+    left: 50%;
+}
+
+.number1 {
+    top: 15%;
+    left: 77.5%;
+}
+
+.number2 {
+    top: 33%;
+    left: 88%;
+}
+
+.number3 {
+    top: 55%;
+    left: 92.5%;
+}
+
+.number4 {
+    top: 77%;
+    left: 83.3%;
+}
+
+.number5 {
+    top: 90%;
+    left: 66.6%;
+}
+
+.number6 {
+    top: 95%;
+    left: 50%;
+}
+
+.number7 {
+    top: 90%;
+    left: 33.3%;
+}
+
+.number8 {
+    top: 77%;
+    left: 16.6%;
+}
+
+.number9 {
+    top: 55%;
+    left: 7.5%;
+}
+
+.number10 {
+    top: 33%;
+    left: 12.5%;
+}
+
+.number11 {
+    top: 15%;
+    left: 22.5%;
+}
+
 .hand {
     position: absolute;
     bottom: 50%;
@@ -149,7 +214,6 @@ body[class^="theme"] {
     z-index: 1;
 }
 
-/* النقطة الوسطى */
 .dot {
     position: absolute;
     width: 10px;
@@ -162,7 +226,6 @@ body[class^="theme"] {
     z-index: 5;
 }
 
-/* التاريخ والتوقيت الرقمي */
 .date-container,
 .digital-clock {
     text-align: center;
@@ -177,7 +240,6 @@ body[class^="theme"] {
     font-weight: bold;
 }
 
-/* أزرار التحكم */
 .controls {
     display: flex;
     flex-wrap: wrap;
@@ -220,7 +282,6 @@ body[class^="theme"] {
     height: 18px;
 }
 
-/* أزرار اختيار الأنماط */
 .themes {
     display: flex;
     gap: 1rem;
@@ -267,42 +328,6 @@ body[class^="theme"] {
 
 .royal {
     background: #2c3e50;
-}
-
-/* تعريف المتغيرات حسب النمط */
-.theme-gold {
-    --bg: #fff;
-    --border: #c4a764;
-    --number: #c4a764;
-    --hand: #c4a764;
-}
-
-.theme-dark {
-    --bg: #121212;
-    --border: #b97e56;
-    --number: #d7a977;
-    --hand: #e6b98c;
-}
-
-.theme-classic {
-    --bg: #fefcf6;
-    --border: #a67c52;
-    --number: #5e4734;
-    --hand: #a67c52;
-}
-
-.theme-steel {
-    --bg: #e6e8ea;
-    --border: #708090;
-    --number: #4a5a6a;
-    --hand: #2f4f4f;
-}
-
-.theme-royal {
-    --bg: #1c2b3a;
-    --border: #d4af37;
-    --number: #f0e68c;
-    --hand: #ffd700;
 }
 
 /* نافذة تأكيد الحذف */
@@ -362,4 +387,120 @@ body[class^="theme"] {
 
 .no-btn:hover {
     background-color: #95a5a6;
+}
+
+/* ======== Media Queries ======== */
+
+/* شاشات متوسطة: أقل من 900px */
+@media (max-width: 900px) {
+    .clock {
+        width: 220px;
+        height: 220px;
+    }
+
+    .clock::before {
+        width: 235px;
+        height: 235px;
+    }
+
+    .number {
+        font-size: 1.2rem;
+    }
+
+    .hour {
+        height: 50px;
+        width: 3px;
+    }
+
+    .minute {
+        height: 70px;
+        width: 2.5px;
+    }
+
+    .second {
+        height: 85px;
+        width: 1.5px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .digital-clock {
+        font-size: 1.2rem;
+    }
+
+    .controls button,
+    .controls input[type="time"],
+    .controls select {
+        min-width: 100px;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.7rem;
+    }
+}
+
+/* شاشات صغيرة: أقل من 480px */
+@media (max-width: 480px) {
+    .clock {
+        width: 180px;
+        height: 180px;
+    }
+
+    .clock::before {
+        width: 195px;
+        height: 195px;
+    }
+
+    .number {
+        font-size: 1rem;
+    }
+
+    .hour {
+        height: 40px;
+        width: 2.5px;
+    }
+
+    .minute {
+        height: 60px;
+        width: 2px;
+    }
+
+    .second {
+        height: 70px;
+        width: 1px;
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .digital-clock {
+        font-size: 1rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+        width: 100%
+    }
+
+    .controls button,
+    .controls input[type="time"],
+    .controls select {
+        min-width: 100%;
+        font-size: 0.9rem;
+        padding: 0.4rem 0;
+    }
+
+    .controls label {
+        margin: 0;
+        text-align: center
+    }
+
+    .themes {
+        justify-content: center;
+    }
 }

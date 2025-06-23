@@ -1,572 +1,426 @@
 :root {
-    --bg: #fff;
-    --border: #c4a764;
-    --number: #c4a764;
-    --hand: #c4a764;
-    --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --bg: #fff;
+  --border: #c4a764;
+  --number: #c4a764;
+  --hand: #c4a764;
+  --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* أنماط الألوان حسب النمط */
-.theme-gold {
-    --bg: #fff;
-    --border: #c4a764;
-    --number: #c4a764;
-    --hand: #c4a764;
+.theme-gold,
+:root {
+  --bg: #fff;
+  --border: #c4a764;
+  --number: #c4a764;
+  --hand: #c4a764;
 }
 
 .theme-dark {
-    --bg: #121212;
-    --border: #b97e56;
-    --number: #d7a977;
-    --hand: #e6b98c;
+  --bg: #181a1f;
+  --border: #4a90e2;
+  --number: #a0aec0;
+  --hand: #f5a623;
 }
+
 
 .theme-classic {
-    --bg: #fefcf6;
-    --border: #a67c52;
-    --number: #5e4734;
-    --hand: #a67c52;
+  --bg: #f4f1ea;
+  --border: #b88a5e;
+  --number: #6b4f3f;
+  --hand: #a35c27;
 }
 
+
+
 .theme-steel {
-    --bg: #e6e8ea;
-    --border: #708090;
-    --number: #4a5a6a;
-    --hand: #2f4f4f;
+  --bg: #e6e8ea;
+  --border: #708090;
+  --number: #4a5a6a;
+  --hand: #2f4f4f;
 }
 
 .theme-royal {
-    --bg: #1c2b3a;
-    --border: #d4af37;
-    --number: #f0e68c;
-    --hand: #ffd700;
+  --bg: #1e2a38;
+  --border: #8da3b9;
+  --number: #cfd8e6;
+  --hand: #5a7184;
 }
 
 body {
-    margin: 0;
-    height: 100vh;
-    background: var(--bg);
-    font-family: var(--font);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    transition: background 0.4s;
-    padding: 1rem;
+  margin: 0;
+  height: 100vh;
+  background: var(--bg);
+  font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  visibility: hidden;
+  transition: background 0.4s;
 }
 
 body[class^="theme"] {
-    visibility: visible;
+  visibility: visible;
 }
 
 .alarm-banner {
-    position: fixed;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(to right, #ffcc70, #ff7e5f);
-    color: #222;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 1rem 2rem;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
-    opacity: 0;
-    transition: all 0.6s ease-in-out;
-
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    justify-content: center;
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #ffcc70, #ff7e5f);
+  color: #222;
+  font: 500 1rem var(--font);
+  padding: 1rem 2rem;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.6s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  white-space: nowrap;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .alarm-banner.show {
-    top: 0;
-    opacity: 1;
+  top: 0;
+  opacity: 1;
 }
 
 .clock {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    background: var(--bg);
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 10px rgba(0, 0, 0, 0.1),
-        0 0 0 6px var(--border),
-        0 0 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background: var(--bg);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 10px rgba(0, 0, 0, 0.1),
+    0 0 0 6px var(--border),
+    0 0 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .clock::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 320px;
-    height: 320px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle at center, var(--border) 20%, transparent 80%);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: -1;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--border) 20%, transparent 80%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
 
 .number {
-    position: absolute;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--number);
-    transform: translate(-50%, -50%);
+  position: absolute;
+  font: bold 1.5rem var(--font);
+  color: var(--number);
+  transform: translate(-50%, -50%);
 }
 
-/* مواقع الأرقام تتناسب مع حجم الساعة */
-.number12 {
-    top: 6.7%;
-    left: 50%;
-}
-
-.number1 {
-    top: 15%;
-    left: 77.5%;
-}
-
-.number2 {
-    top: 33%;
-    left: 88%;
-}
-
-.number3 {
-    top: 55%;
-    left: 92.5%;
-}
-
-.number4 {
-    top: 77%;
-    left: 83.3%;
-}
-
-.number5 {
-    top: 90%;
-    left: 66.6%;
-}
-
-.number6 {
-    top: 95%;
-    left: 50%;
-}
-
-.number7 {
-    top: 90%;
-    left: 33.3%;
-}
-
-.number8 {
-    top: 77%;
-    left: 16.6%;
-}
-
-.number9 {
-    top: 55%;
-    left: 7.5%;
-}
-
-.number10 {
-    top: 33%;
-    left: 12.5%;
-}
-
-.number11 {
-    top: 15%;
-    left: 22.5%;
-}
+.number12 { top: 6.7%; left: 50%; }
+.number1  { top: 15%; left: 77.5%; }
+.number2  { top: 33%; left: 88%; }
+.number3  { top: 55%; left: 92.5%; }
+.number4  { top: 77%; left: 83.3%; }
+.number5  { top: 90%; left: 66.6%; }
+.number6  { top: 95%; left: 50%; }
+.number7  { top: 90%; left: 33.3%; }
+.number8  { top: 77%; left: 16.6%; }
+.number9  { top: 55%; left: 7.5%; }
+.number10 { top: 33%; left: 12.5%; }
+.number11 { top: 15%; left: 22.5%; }
 
 .hand {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    transform-origin: bottom center;
-    background: var(--hand);
-    border-radius: 6px;
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  background: var(--hand);
+  border-radius: 6px;
 }
 
-.hour {
-    width: 4px;
-    height: 70px;
-    z-index: 3;
-}
-
-.minute {
-    width: 3px;
-    height: 100px;
-    z-index: 2;
-}
-
-.second {
-    width: 2px;
-    height: 120px;
-    z-index: 1;
-}
+.hour   { width: 4px; height: 70px; z-index: 3; }
+.minute { width: 3px; height: 100px; z-index: 2; }
+.second { width: 2px; height: 120px; z-index: 1; }
 
 .dot {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: var(--hand);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--hand);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
 }
 
 .date-container,
 .digital-clock {
-    text-align: center;
-    color: var(--number);
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-    margin-bottom: 0.5rem;
+  text-align: center;
+  color: var(--number);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.5rem;
 }
 
 .digital-clock {
-    font-family: 'Courier New', monospace;
-    font-size: 1.4rem;
-    font-weight: bold;
+  font: bold 1.4rem 'Courier New', monospace;
 }
 
 .controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .alarm-countdown {
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
-    font-weight: 500;
+  font: 500 1.1rem var(--font);
+  margin-bottom: 0.6rem;
 }
 
-.alarm-countdown.soon {
-    color: #e74c3c;
-}
-
-.alarm-countdown.medium {
-    color: #f39c12;
-}
-
-.alarm-countdown.later {
-    color: #2ecc71;
-}
-
+.alarm-countdown.soon   { color: #e74c3c; }
+.alarm-countdown.medium { color: #f39c12; }
+.alarm-countdown.later  { color: #2ecc71; }
 
 .controls button,
 .controls input[type="time"],
 .controls select {
-    padding: 0.4rem 1rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid #aaa;
-    background-color: var(--border);
-    color: #fff;
-    cursor: pointer;
-    min-width: 130px;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background-color: var(--border);
+  color: #fff;
+  cursor: pointer;
+  min-width: 130px;
 }
 
 .controls input[type="time"] {
-    background: #fff;
-    color: #000;
-    border: 1px solid #aaa;
-    min-width: unset;
+  background: #fff;
+  color: #000;
+  min-width: unset;
 }
 
 .controls label {
-    color: var(--number);
-    user-select: none;
-    cursor: pointer;
-    margin-right: 0.4rem;
+  color: var(--number);
+  user-select: none;
+  cursor: pointer;
+  margin-right: 0.4rem;
 }
 
 .controls input[type="checkbox"] {
-    cursor: pointer;
-    width: 18px;
-    height: 18px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
 }
 
+
+/* ========== Themes ========== */
 .themes {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .theme-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .theme-btn:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .theme-btn.active-theme {
-    outline: 3px solid #ffd700;
-    transform: scale(1.2);
-    box-shadow: 0 0 10px #ffd700;
-    z-index: 10;
+  outline: 3px solid #ffd700;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px #ffd700;
+  z-index: 10;
 }
 
-/* ألوان الأنماط */
-.gold {
-    background: #c4a764;
-}
+.gold   { background: #c4a764; }
+.dark   { background: #222; }
+.classic{ background: #faf3e0; }
+.steel  { background: #708090; }
+.royal  { background: #2c3e50; }
 
-.dark {
-    background: #222;
-}
-
-.classic {
-    background: #faf3e0;
-}
-
-.steel {
-    background: #708090;
-}
-
-.royal {
-    background: #2c3e50;
-}
-
-/* نافذة تأكيد الحذف */
-
+/* ========== Confirmation Modal ========== */
 .confirm-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.95);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    display: none;
-    /* نقطة البداية */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none;
 }
 
 .confirm-modal.showing {
-    display: flex;
-    /* تظهر فورًا ولكن بدون شفافية */
+  display: flex;
 }
 
 .confirm-modal.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
 }
 
-
 .confirm-modal-content {
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px 30px;
-    max-width: 320px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 30px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .confirm-modal-text {
-    font-size: 18px;
-    margin-bottom: 20px;
-    color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .confirm-btn {
-    border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
-    color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
 }
 
-.yes-btn {
-    background-color: #c0392b;
-}
+.yes-btn     { background-color: #c0392b; }
+.yes-btn:hover { background-color: #e74c3c; }
 
-.yes-btn:hover {
-    background-color: #e74c3c;
-}
+.no-btn      { background-color: #7f8c8d; }
+.no-btn:hover{ background-color: #95a5a6; }
 
-.no-btn {
-    background-color: #7f8c8d;
-}
-
-.no-btn:hover {
-    background-color: #95a5a6;
+.no-btn.pulsing {
+  animation: pulse 1.2s ease-out 2;
 }
 
 @keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
-    }
-
-    70% {
-        box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
-    }
+  0%   { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+  70%  { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
 }
 
-.no-btn.pulsing {
-    animation: pulse 1.2s ease-out 2;
-}
-
-
-/* ======== Media Queries ======== */
-
-/* شاشات متوسطة: أقل من 900px */
+/* ========== Responsive Design ========== */
 @media (max-width: 900px) {
-    .clock {
-        width: 220px;
-        height: 220px;
-    }
+  .clock {
+    width: 220px;
+    height: 220px;
+  }
 
-    .clock::before {
-        width: 235px;
-        height: 235px;
-    }
+  .clock::before {
+    width: 235px;
+    height: 235px;
+  }
 
-    .number {
-        font-size: 1.2rem;
-    }
+  .number {
+    font-size: 1.2rem;
+  }
 
-    .hour {
-        height: 50px;
-        width: 3px;
-    }
+  .hour   { height: 50px; width: 3px; }
+  .minute { height: 70px; width: 2.5px; }
+  .second { height: 85px; width: 1.5px; }
+  .dot    { width: 8px; height: 8px; }
 
-    .minute {
-        height: 70px;
-        width: 2.5px;
-    }
+  .digital-clock {
+    font-size: 1.2rem;
+  }
 
-    .second {
-        height: 85px;
-        width: 1.5px;
-    }
-
-    .dot {
-        width: 8px;
-        height: 8px;
-    }
-
-    .digital-clock {
-        font-size: 1.2rem;
-    }
-
-    .controls button,
-    .controls input[type="time"],
-    .controls select {
-        min-width: 100px;
-        font-size: 0.9rem;
-        padding: 0.3rem 0.7rem;
-    }
+  .controls button,
+  .controls input[type="time"],
+  .controls select {
+    min-width: 100px;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.7rem;
+  }
 }
 
-/* شاشات صغيرة: أقل من 480px */
 @media (max-width: 480px) {
-    .clock {
-        width: 180px;
-        height: 180px;
-    }
+  .clock {
+    width: 180px;
+    height: 180px;
+  }
 
-    .clock::before {
-        width: 195px;
-        height: 195px;
-    }
+  .clock::before {
+    width: 195px;
+    height: 195px;
+  }
 
-    .number {
-        font-size: 1rem;
-    }
+  .number {
+    font-size: 1rem;
+  }
 
-    .hour {
-        height: 40px;
-        width: 2.5px;
-    }
+  .hour   { height: 40px; width: 2.5px; }
+  .minute { height: 60px; width: 2px; }
+  .second { height: 70px; width: 1px; }
+  .dot    { width: 6px; height: 6px; }
 
-    .minute {
-        height: 60px;
-        width: 2px;
-    }
+  .digital-clock {
+    font-size: 1rem;
+  }
 
-    .second {
-        height: 70px;
-        width: 1px;
-    }
+  .controls {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+    width: 100%;
+  }
 
-    .dot {
-        width: 6px;
-        height: 6px;
-    }
+  .alarm-banner {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    white-space: normal;
+    max-width: 95vw;
+  }
 
-    .digital-clock {
-        font-size: 1rem;
-    }
+  .controls button,
+  .controls input[type="time"],
+  .controls select {
+    min-width: 100%;
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
 
-    .controls {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: stretch;
-        width: 100%
-    }
+  .controls label {
+    margin: 0;
+    text-align: center;
+  }
 
-    .alarm-banner {
-        font-size: 0.9rem;
-        padding: 0.75rem 1rem;
-        flex-wrap: wrap;
-        white-space: normal;
-        max-width: 95vw;
-    }
-
-    .controls button,
-    .controls input[type="time"],
-    .controls select {
-        min-width: 100%;
-        font-size: 0.9rem;
-        padding: 0.4rem 0;
-    }
-
-    .controls label {
-        margin: 0;
-        text-align: center
-    }
-
-    .themes {
-        justify-content: center;
-    }
+  .themes {
+    justify-content: center;
+  }
 }
